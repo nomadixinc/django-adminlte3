@@ -9,6 +9,7 @@ from django import template
 import re
 
 from django.urls import reverse
+from admin_volt.utils import get_app_list
 
 
 class _Menu:
@@ -100,12 +101,13 @@ class _Menu:
 
     def admin_apps(self, context, r):
         request = context['request']
-        for app in context['available_apps']:
-            app_name = app['name'][:20]+'...' if len(app['name']) >= 20 else app['name']
+        print(context)
+        #for app in context.get('available_apps', []):
+        for app in get_app_list(context):
             if(str(app['app_url']) in request.path):
-                    r += '<li class="nav-item has-treeview menu-open"><a href="#" class="nav-link active"><i class="nav-icon fas fa-edit"></i> <p>%s</p><p><i class="fas fa-angle-left right"></i></p></a><ul class="nav nav-treeview">\n' % (app_name)
+                    r += '<li class="nav-item has-treeview menu-open"><a href="#" class="nav-link active"><i class="nav-icon fas fa-edit"></i> <p>%s</p><p><i class="fas fa-angle-left right"></i></p></a><ul class="nav nav-treeview">\n' % (app['name'])
             else:
-                r += '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="nav-icon fas fa-edit"></i> <p>%s</p><p><i class="fas fa-angle-left right"></i></p></a><ul class="nav nav-treeview">\n' % (app_name)
+                r += '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="nav-icon fas fa-edit"></i> <p>%s</p><p><i class="fas fa-angle-left right"></i></p></a><ul class="nav nav-treeview">\n' % (app['name'])
 
             for model in app['models']:
                 if 'add_url' in model:
