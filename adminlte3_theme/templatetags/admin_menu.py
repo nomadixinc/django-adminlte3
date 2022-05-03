@@ -101,7 +101,6 @@ class _Menu:
 
     def admin_apps(self, context, r):
         request = context['request']
-        print(context)
         #for app in context.get('available_apps', []):
         for app in get_app_list(context):
             if(str(app['app_url']) in request.path):
