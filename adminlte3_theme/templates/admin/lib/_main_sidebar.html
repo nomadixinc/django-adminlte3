@@ -2,6 +2,6 @@
 {% load admin_menu %}
 
 {% block nav_links %}
-    {% block nav_extra_links}{% block nav_extra_links %}
+    {% block nav_extra_links}{% endblock nav_extra_links %}
     {% autoescape off %}{% menu %}{% endautoescape %}
 {% endblock nav_links %}
